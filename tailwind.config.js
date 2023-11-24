@@ -34,6 +34,9 @@ module.exports = {
         red: '#EB5757',
         yellow: '#F2C94C',
       },
+      fontFamily: {
+        sans: ['Work Sans', 'sans-serif'],
+      },
     },
   },
   plugins: [],
