@@ -3,16 +3,14 @@ import NavButton from '../components/LinkButton.vue';
 </script>
 
 <template>
-  <nav class="flex flex-wrap justify-between mx-[100px] py-6">
+  <nav class="flex flex-wrap justify-between max-w-[1240px] mx-auto py-6">
     <router-link to="/" class="flex items-center">
       <img src="@/assets/images/homePage/icon-plane.svg" alt="" />
       <span class="ml-3 text-lg font-semibold text-[#1B1F2D]"
         >my Dream Place</span
       >
     </router-link>
-    <ul
-      class="flex flex-wrap gap-12 items-center text-base justify-center text-gray-1"
-    >
+    <ul class="flex flex-wrap gap-12 items-center justify-center text-gray-1">
       <li class="hover:underline">
         <a href="#">Home</a>
       </li>
