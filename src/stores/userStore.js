@@ -1,46 +1,84 @@
-import { v4 as uuidv4 } from 'uuid';
+import { auth } from '@/firebase';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
 import { defineStore } from 'pinia';
+const localStorageKey = 'user';
 
 export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
-    users: [],
     user: null,
     token: null,
   }),
   actions: {
-    register(email, password) {
-      const newUser = { id: uuidv4(), email, password };
-      this.users.push(newUser);
-    },
-    signIn(email, password) {
-      const user = this.users.find(
-        (user) => user.email === email && user.password === password
-      );
-      if (user) {
-        this.user = user;
+    async register(email, password) {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredential.user;
 
-        // Encode user information to create a basic token using btoa()
-        const tokenString = `${user.id}:${user.email}`;
-        this.token = btoa(tokenString);
-
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('token', this.token);
+        this.setUser(user);
+      } catch (error) {
+        console.error(error.message);
+        throw new Error('Failed to register');
       }
     },
-    signOut() {
+
+    async signIn(email, password) {
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredential.user;
+
+        this.setUser(user);
+      } catch (error) {
+        console.error(error.message);
+        throw new Error('Failed to sign in');
+      }
+    },
+
+    async signOut() {
+      await signOut(auth);
+      this.clearUser();
+    },
+
+    setUser(user) {
+      this.user = user;
+      user.getIdToken().then((token) => {
+        this.token = token;
+
+        localStorage.setItem(localStorageKey, JSON.stringify({ user, token }));
+      });
+    },
+
+    clearUser() {
       this.user = null;
       this.token = null;
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
+
+      localStorage.removeItem(localStorageKey);
     },
+
     loadFromLocalStorage() {
-      const user = localStorage.getItem('user');
-      const token = localStorage.getItem('token');
-      if (user && token) {
-        this.user = JSON.parse(user);
+      const data = localStorage.getItem(localStorageKey);
+      if (data) {
+        const { user, token } = JSON.parse(data);
+        this.user = user;
         this.token = token;
       }
+    },
+
+    // Helper function to generate a token from user data
+    generateToken(user) {
+      return btoa(`${user.uid}:${user.email}`);
     },
   },
 });
