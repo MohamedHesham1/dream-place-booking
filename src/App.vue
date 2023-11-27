@@ -5,15 +5,11 @@ import FooterItem from './layouts/FooterItem.vue';
 </script>
 
 <template>
-  <header>
-    <NavbarItem />
-  </header>
+  <NavbarItem />
   <main>
     <RouterView />
   </main>
-  <footer>
-    <FooterItem />
-  </footer>
+  <FooterItem />
 </template>
 
 <style scoped></style>
