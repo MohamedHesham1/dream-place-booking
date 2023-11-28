@@ -1,5 +1,6 @@
 <script setup>
 import australia from '@/assets/images/homePage/australia.webp';
+import downloadBanner from '@/assets/images/homePage/download-banner.webp';
 import greece from '@/assets/images/homePage/greece.webp';
 import hotel1 from '@/assets/images/homePage/hotel1.webp';
 import hotel2 from '@/assets/images/homePage/hotel2.webp';
@@ -13,7 +14,6 @@ import overlay3 from '@/assets/images/homePage/overlay3.webp';
 import downloadBanner from '@/assets/images/homePage/download-banner.webp';
 import DestinationCard from '@/components/DestinationCard.vue';
 import OverlayCard from '@/components/OverlayCard.vue';
-import AppButton from '@/components/AppButton.vue';
 
 const cards = [
   {
@@ -97,7 +97,7 @@ const popularCards = [
 <template>
   <div class="max-w-[1240px] mx-auto">
     <section class="mb-[82px]">
-      <div class="flex h-[500px] relative justify-center items-center">
+      <div class="flex flex-col h-[500px] relative justify-center items-center">
         <img
           alt="sydney city"
           class="w-full h-full object-cover object-bottom absolute rounded-[10px]"
@@ -141,7 +141,7 @@ const popularCards = [
         <ul class="flex gap-5 flex-wrap">
           <li v-for="card in cards" :key="card.id" class="">
             <DestinationCard
-              :imageUrl="card.imageUrl"
+              :image-url="card.imageUrl"
               :title="card.title"
               :description="card.description"
             />
@@ -158,7 +158,7 @@ const popularCards = [
         <ul class="flex flex-wrap gap-5">
           <li v-for="card in promoCards" :key="card.id">
             <OverlayCard
-              :imageUrl="card.imageUrl"
+              :image-url="card.imageUrl"
               :title="card.title"
               :description="card.description"
             />
@@ -175,7 +175,7 @@ const popularCards = [
         <ul class="flex flex-wrap gap-5">
           <li v-for="card in popularCards" :key="card.id">
             <DestinationCard
-              :imageUrl="card.imageUrl"
+              :image-url="card.imageUrl"
               :title="card.title"
               :description="card.description"
             />
@@ -192,13 +192,13 @@ const popularCards = [
         backgroundPosition: 'center',
       }"
     >
-      <div class="py-[64px] pl-[69px]">
+      <!-- <div class="py-[64px] pl-[69px]">
         <h2 class="text-white font-semibold text-[28px]">
           Download the mobile application for bonus <br />
           coupons and travel codes
         </h2>
         <AppButton> Download mobile app </AppButton>
-      </div>
+      </div> -->
     </div>
 
     <div class="text-center mb-20">
