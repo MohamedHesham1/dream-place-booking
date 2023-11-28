@@ -2,7 +2,7 @@
 
 <template>
   <button
-    class="bg-primary text-white font-medium py-[12px] px-[18px] rounded-md"
+    class="bg-primary border border-solid border-primary text-white transition-colors font-medium py-[12px] px-[18px] rounded-md hover:bg-transparent hover:text-primary"
   >
     <slot></slot>
   </button>
