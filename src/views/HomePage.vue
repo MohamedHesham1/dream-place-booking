@@ -11,7 +11,7 @@ import newZealand from '@/assets/images/homePage/new-zealand.webp';
 import overlay1 from '@/assets/images/homePage/overlay1.webp';
 import overlay2 from '@/assets/images/homePage/overlay2.webp';
 import overlay3 from '@/assets/images/homePage/overlay3.webp';
-import downloadBanner from '@/assets/images/homePage/download-banner.webp';
+import BookingSearchForm from '@/components/BookingSearchForm.vue';
 import DestinationCard from '@/components/DestinationCard.vue';
 import OverlayCard from '@/components/OverlayCard.vue';
 
@@ -41,7 +41,6 @@ const cards = [
     description: '320 properties',
   },
 ];
-
 const promoCards = [
   {
     id: 1,
@@ -65,7 +64,6 @@ const promoCards = [
       'Pandemic is still intact and will be here for a longer time. Here’s where your next destination...',
   },
 ];
-
 const popularCards = [
   {
     id: 1,
@@ -113,6 +111,7 @@ const popularCards = [
             information and inspiration from us
           </p>
         </div>
+        <BookingSearchForm position="195px" />
       </div>
     </section>
     <div
