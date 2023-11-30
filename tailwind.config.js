@@ -3,13 +3,6 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      screens: {
-        xl: { max: '1200px' },
-        lg: { max: '992px' },
-        md: { max: '767px' },
-        sm: { max: '600px' },
-        xm: { max: '480px' },
-      },
       colors: {
         primary: '#2F80ED',
         secondary: '#181818',
@@ -35,7 +28,7 @@ module.exports = {
         yellow: '#F2C94C',
       },
       fontFamily: {
-        sans: ['Work Sans', 'sans-serif'],
+        sans: ['SF Pro Display', 'sans-serif'],
       },
     },
   },
