@@ -1,10 +1,10 @@
 <script setup>
-import { fetchData } from '@/api/api';
+import { getSearchDestination } from '@/api/apiCalls';
 import AppButton from '@/components/AppButton.vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { computed, onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 defineProps({
   position: {
@@ -13,23 +13,27 @@ defineProps({
 });
 
 const router = useRouter();
-const formValues = ref({ place: null });
-const cities = ref([]);
+const route = useRoute();
+const citiesDetails = ref([]);
+const formValues = ref({
+  place: null,
+  checkInDate: null,
+  checkOutDate: null,
+  guests: null,
+  rooms: null,
+});
 
-const handleSubmit = () => {
-  const query = {
-    place: formValues.value.place,
-    checkInDate: formValues.value.checkInDate.toISOString(),
-    checkOutDate: formValues.value.checkOutDate.toISOString(),
-    guests: formValues.value.guests,
-    rooms: formValues.value.rooms,
+if (Object.keys(route.query).length > 0) {
+  const { place, checkInDate, checkOutDate, guests, rooms } =
+    router.currentRoute.value.query;
+  formValues.value = {
+    place,
+    checkInDate: new Date(checkInDate),
+    checkOutDate: new Date(checkOutDate),
+    guests,
+    rooms,
   };
-
-  router.push({
-    name: 'Search Results',
-    query,
-  });
-};
+}
 
 const today = computed(() => new Date());
 const tomorrow = computed(() => {
@@ -37,27 +41,38 @@ const tomorrow = computed(() => {
   date.setDate(date.getDate() + 1);
   return date;
 });
-
-const getCityNames = async () => {
-  try {
-    const data = await fetchData('hotels/searchDestination', {
-      query: 'egypt',
-    });
-    cities.value = data.data
-      .filter((destination) => destination.dest_type === 'city')
-      .map((city) => city.name);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-onMounted(getCityNames);
-
 const options = computed(() => {
   return [
     { value: null, text: 'Where are you going?', disabled: true },
-    ...cities.value.map((city) => ({ value: city, text: city })),
+    ...citiesDetails.value.map((city) => ({
+      value: city.name,
+      text: city.name,
+    })),
   ];
+});
+
+const getDestId = (destination) => {
+  return citiesDetails.value.find((city) => city.name === destination).dest_id;
+};
+
+const handleSubmit = () => {
+  const { place, checkInDate, checkOutDate, guests, rooms } = formValues.value;
+  const query = {
+    place,
+    checkInDate: checkInDate.toISOString(),
+    checkOutDate: checkOutDate.toISOString(),
+    guests,
+    rooms,
+    destId: getDestId(place),
+  };
+  router.push({
+    name: 'Search Results',
+    query,
+  });
+};
+
+onMounted(async () => {
+  getSearchDestination(citiesDetails);
 });
 </script>
 
@@ -65,7 +80,7 @@ const options = computed(() => {
   <!-- unfinished -->
   <form
     @submit.prevent="handleSubmit"
-    class="search-form flex gap-[15px] relative z-10 rounded-lg pt-[10px] pb-[11px] pr-[13px] pl-[12px] bg-white max-w-[1030px]"
+    class="search-form flex gap-[15px] absolute z-10 rounded-lg pt-[10px] pb-[11px] pr-[13px] pl-[12px] bg-white max-w-[1030px]"
     :style="`top: ${position}`"
   >
     <select
