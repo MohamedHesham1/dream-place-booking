@@ -14,6 +14,7 @@ import overlay3 from '@/assets/images/homePage/overlay3.webp';
 import BookingSearchForm from '@/components/BookingSearchForm.vue';
 import DestinationCard from '@/components/DestinationCard.vue';
 import OverlayCard from '@/components/OverlayCard.vue';
+import AppNotice from '@/components/AppNotice.vue';
 
 const cards = [
   {
@@ -114,19 +115,7 @@ const popularCards = [
         <BookingSearchForm position="195px" />
       </div>
     </section>
-    <div
-      class="flex items-center py-[25px] w-full bg-[#FCEFCA] rounded-lg tracking-[0.32px] mb-[50px]"
-    >
-      <img
-        src="@/assets/images/homePage/icon-danger.svg"
-        alt=""
-        class="mr-[19px] ml-6"
-      />
-      <p>
-        Check the latest COVID-19 restrictions before you travel.
-        <a href="#" class="text-primary hover:underline"> Learn more </a>
-      </p>
-    </div>
+    <AppNotice />
     <section class="mb-[60px]">
       <div>
         <h2 class="font-semibold mb-4 text-[28px] text-black-default">
@@ -137,8 +126,8 @@ const popularCards = [
           destination information and inspiration from us
         </p>
 
-        <ul class="flex gap-5 flex-wrap">
-          <li v-for="card in cards" :key="card.id" class="">
+        <ul class="flex gap-5 flex-wrap" v-once>
+          <li v-for="card in cards" :key="card.id">
             <DestinationCard
               :image-url="card.imageUrl"
               :title="card.title"
@@ -149,7 +138,7 @@ const popularCards = [
       </div>
     </section>
 
-    <section class="mb-[60px]">
+    <section class="mb-[60px]" v-once>
       <div>
         <h2 class="font-semibold mb-6 text-[28px] text-black-default">
           Get inspiration for your next trip
@@ -166,7 +155,7 @@ const popularCards = [
       </div>
     </section>
 
-    <section class="mb-[60px]">
+    <section class="mb-[60px]" v-once>
       <div>
         <h2 class="font-semibold mb-6 text-[28px] text-black-default">
           Popular hotels
