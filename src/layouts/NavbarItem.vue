@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import LinkButton from '../components/LinkButton.vue';
+import AppLink from '../components/AppLink.vue';
 
 const route = useRoute();
 const showNavigation = computed(() => {
@@ -22,7 +22,6 @@ const isSearchPage = computed(() => {
           :class="[
             'ml-3',
             'text-lg',
-            'font-semibold',
             isSearchPage ? 'text-white' : 'text-[#1B1F2D]',
           ]"
           >my Dream Place</span
@@ -30,7 +29,7 @@ const isSearchPage = computed(() => {
       </router-link>
       <div class="contents" v-if="showNavigation">
         <ul
-          :class="`flex flex-wrap gap-12 items-center justify-center ${
+          :class="`flex flex-wrap gap-12 font-normal items-center justify-center ${
             isSearchPage ? 'text-white' : 'text-gray-1'
           }`"
         >
@@ -50,10 +49,14 @@ const isSearchPage = computed(() => {
             <a href="#">Contact</a>
           </li>
         </ul>
-        <LinkButton route="/login">Login</LinkButton>
+        <AppLink route="/login">Login</AppLink>
       </div>
     </nav>
   </header>
+  <div
+    v-if="isSearchPage"
+    class="w-full absolute top-0 -z-50 h-[200px] bg-[linear-gradient(180deg,#2969BF,#144E9D)]"
+  ></div>
 </template>
 
 <style scoped></style>

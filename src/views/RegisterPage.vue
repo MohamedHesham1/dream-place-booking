@@ -49,12 +49,12 @@ const handleSubmit = async () => {
 
 <template>
   <div class="max-w-[400px] mt-[92px] mx-auto">
-    <h1 class="text-[#181818] text-center text-3xl font-bold mb-16">
+    <h1 class="text-secondary text-center text-3xl font-bold mb-16">
       Register
     </h1>
     <form @submit.prevent="handleSubmit" class="flex flex-col">
       <label
-        class="text-[#181818] text-xs font-medium tracking-[0.28px] mb-1"
+        class="text-secondary text-xs font-medium tracking-[0.28px] mb-1"
         for="email"
         >Email:</label
       >
@@ -67,7 +67,7 @@ const handleSubmit = async () => {
       />
 
       <label
-        class="text-[#181818] text-xs font-medium tracking-[0.28px] mb-1"
+        class="text-secondary text-xs font-medium tracking-[0.28px] mb-1"
         for="password"
         >Password:</label
       >
@@ -82,7 +82,7 @@ const handleSubmit = async () => {
       <p v-if="passwordError" class="text-red">{{ passwordError }}</p>
 
       <label
-        class="text-[#181818] text-xs font-medium tracking-[0.28px] mb-1"
+        class="text-secondary text-xs font-medium tracking-[0.28px] mb-1"
         for="confirm-password"
         >Confirm Password:</label
       >
