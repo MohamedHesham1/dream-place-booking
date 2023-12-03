@@ -5,12 +5,20 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const showFooter = computed(() => {
-  return route.path !== '/register' && route.path !== '/login';
+  return (
+    route.path !== '/register' &&
+    route.path !== '/login' &&
+    route.path !== '/checkout'
+  );
+});
+
+const changeBackground = computed(() => {
+  return route.path === '/hotel-details' ? 'bg-[#F4F4F4]' : '';
 });
 </script>
 
 <template>
-  <footer v-if="showFooter">
+  <footer v-if="showFooter" :class="`${changeBackground}`">
     <div class="max-w-[1240px] mx-auto mb-[60px]">
       <div class="flex items-start flex-wrap">
         <div>

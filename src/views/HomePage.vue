@@ -94,34 +94,36 @@ const popularCards = [
 </script>
 
 <template>
-  <div class="max-w-[1240px] mx-auto">
-    <section class="mb-[82px]">
-      <div class="flex flex-col h-[500px] relative justify-center items-center">
+  <div class="max-w-[77.5rem] mx-auto">
+    <section class="mb-[5.125rem]">
+      <div
+        class="flex flex-col h-[31.25rem] relative justify-center items-center"
+      >
         <img
           alt="sydney city"
-          class="w-full h-full object-cover object-bottom absolute rounded-[10px]"
+          class="w-full h-full object-cover object-bottom absolute rounded-[.625rem]"
           src="@/assets/images/homePage/cover-banner.webp"
         />
         <div class="text-center text-white relative z-10">
-          <h1 class="text-[2rem] font-bold title-font mb-5">
+          <h1 class="text-[32px] font-bold title-font mb-5">
             Enjoy Your Dream Vacation
           </h1>
-          <p class="leading-7 font-normal text-xl tracking-[0.4px]">
+          <p class="leading-7 font-normal text-xl tracking-[.025rem]">
             Plan and book our perfect trip with expert advice, travel tips,
             destination <br />
             information and inspiration from us
           </p>
         </div>
-        <BookingSearchForm position="195px" />
+        <BookingSearchForm position="471.8px" />
       </div>
     </section>
     <AppNotice />
-    <section class="mb-[60px]">
+    <section class="mb-[3.75rem]">
       <div>
-        <h2 class="font-semibold mb-4 text-[28px] text-black-default">
+        <h2 class="font-semibold mb-4 text-[1.75rem] text-black-default">
           Enjoy your dream vacation
         </h2>
-        <p class="tracking-[0.32px] mb-[30px]">
+        <p class="tracking-[.02rem] mb-[1.875rem]">
           Plan and book our perfect trip with expert advice, travel tips,
           destination information and inspiration from us
         </p>
@@ -138,9 +140,9 @@ const popularCards = [
       </div>
     </section>
 
-    <section class="mb-[60px]" v-once>
+    <section class="mb-[3.75rem]" v-once>
       <div>
-        <h2 class="font-semibold mb-6 text-[28px] text-black-default">
+        <h2 class="font-semibold mb-6 text-[1.75rem] text-black-default">
           Get inspiration for your next trip
         </h2>
         <ul class="flex flex-wrap gap-5">
@@ -155,9 +157,9 @@ const popularCards = [
       </div>
     </section>
 
-    <section class="mb-[60px]" v-once>
+    <section class="mb-[3.75rem]" v-once>
       <div>
-        <h2 class="font-semibold mb-6 text-[28px] text-black-default">
+        <h2 class="font-semibold mb-6 text-[1.75rem] text-black-default">
           Popular hotels
         </h2>
         <ul class="flex flex-wrap gap-5">
@@ -173,15 +175,15 @@ const popularCards = [
     </section>
     <!-- needs to be fixed -->
     <div
-      class="h-[280px] rounded-lg mb-[60px]"
+      class="h-[17.5rem] rounded-lg mb-[3.75rem]"
       :style="{
         backgroundImage: `url(${downloadBanner})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }"
     >
-      <!-- <div class="py-[64px] pl-[69px]">
-        <h2 class="text-white font-semibold text-[28px]">
+      <!-- <div class="py-[4rem] pl-[4.3125rem]">
+        <h2 class="text-white font-semibold text-[1.75rem]">
           Download the mobile application for bonus <br />
           coupons and travel codes
         </h2>
@@ -190,7 +192,7 @@ const popularCards = [
     </div>
 
     <div class="text-center mb-20">
-      <h2 class="font-semibold mb-4 text-[28px] text-secondary">
+      <h2 class="font-semibold mb-4 text-[1.75rem] text-secondary">
         Explore the world with My Dream place
       </h2>
       <a href="#" class="text-primary hover:underline"

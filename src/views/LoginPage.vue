@@ -10,12 +10,14 @@ const errorMessage = ref('');
 const successMessage = ref('');
 const userStore = useUserStore();
 const router = useRouter();
-
+const currentQuery = router.currentRoute.value.query;
+console.log(currentQuery);
 const handleSubmit = async () => {
   try {
     await userStore.signIn(email.value, password.value);
     successMessage.value = 'User signed in successfully';
-    router.push('/');
+
+    router.push({ name: 'Search Results', query: currentQuery });
   } catch (error) {
     errorMessage.value = 'Wrong username or password.';
     console.error('Error signing in user:', error);

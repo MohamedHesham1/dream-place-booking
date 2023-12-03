@@ -1,9 +1,29 @@
 <script setup>
-import { computed } from 'vue';
+import AppLink from '@/components/AppLink.vue';
+import { useUserStore } from '@/stores/userStore';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import AppLink from '../components/AppLink.vue';
 
 const route = useRoute();
+const userStore = useUserStore();
+
+const dropdownVisible = ref(false);
+
+const dropdownContainer = ref(null);
+
+const toggleDropdown = () => {
+  dropdownVisible.value = !dropdownVisible.value;
+};
+
+const handleClickOutside = (event) => {
+  if (
+    dropdownContainer.value &&
+    !dropdownContainer.value.contains(event.target)
+  ) {
+    dropdownVisible.value = false;
+  }
+};
+
 const showNavigation = computed(() => {
   return route.path !== '/register' && route.path !== '/login';
 });
@@ -11,13 +31,25 @@ const showNavigation = computed(() => {
 const isSearchPage = computed(() => {
   return route.name === 'Search Results';
 });
+
+onMounted(() => {
+  window.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('click', handleClickOutside);
+});
 </script>
 
 <template>
   <header>
     <nav class="flex flex-wrap justify-between max-w-[1240px] mx-auto py-6">
       <router-link to="/" class="flex items-center">
-        <img src="@/assets/images/homePage/icon-plane.svg" alt="" />
+        <img
+          :class="isSearchPage ? 'white-icon' : ''"
+          src="@/assets/images/homePage/icon-plane.svg"
+          alt=""
+        />
         <span
           :class="[
             'ml-3',
@@ -49,7 +81,37 @@ const isSearchPage = computed(() => {
             <a href="#">Contact</a>
           </li>
         </ul>
-        <AppLink route="/login">Login</AppLink>
+
+        <div v-if="userStore.user" class="flex items-center gap-4">
+          <img src="@/assets/images/icon-notification.svg" alt="" />
+          <div class="relative" ref="dropdownContainer">
+            <button @click="toggleDropdown" class="focus:outline-none">
+              <img src="@/assets/images/icon-avatar.svg" alt="Avatar" />
+            </button>
+            <div
+              v-show="dropdownVisible"
+              class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20"
+            >
+              <a
+                href="#"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Profile</a
+              >
+              <a
+                href="#"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Settings</a
+              >
+              <button
+                @click="userStore.signOut"
+                class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+        <AppLink v-else route="/login">Login</AppLink>
       </div>
     </nav>
   </header>
@@ -59,4 +121,8 @@ const isSearchPage = computed(() => {
   ></div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.white-icon {
+  filter: brightness(0) invert(1);
+}
+</style>

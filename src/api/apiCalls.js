@@ -42,9 +42,22 @@ export const getSortby = async (searchValues) => {
   }
 };
 
-export const getHotelDetails = async (hotelId) => {
+export const getHotelDetails = async (hotelId, checkInDate, checkOutDate) => {
   try {
     const response = await fetchData('hotels/getHotelDetails', {
+      hotel_id: hotelId,
+      arrival_date: checkInDate,
+      departure_date: checkOutDate,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getDescriptionAndInfo = async (hotelId) => {
+  try {
+    const response = await fetchData('hotels/getDescriptionAndInfo', {
       hotel_id: hotelId,
     });
     return response.data;

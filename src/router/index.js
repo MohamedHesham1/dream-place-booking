@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useUserStore } from '../stores/userStore';
-import HomePage from '../views/HomePage.vue';
-import LoginPage from '../views/LoginPage.vue';
-import RegisterPage from '../views/RegisterPage.vue';
-import SearchResultsPage from '../views/SearchResultsPage.vue';
-import HotelDetailsPage from '../views/HotelDetailsPage.vue';
+import { useUserStore } from '@/stores/userStore';
+import HomePage from '@/views/HomePage.vue';
+import LoginPage from '@/views/LoginPage.vue';
+import RegisterPage from '@/views/RegisterPage.vue';
+import SearchResultsPage from '@/views/SearchResultsPage.vue';
+import HotelDetailsPage from '@/views/HotelDetailsPage.vue';
+import CheckoutPage from '@/views/CheckoutPage.vue';
+import MyTripsPage from '@/views/MyTripsPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,9 +32,19 @@ const router = createRouter({
       component: SearchResultsPage,
     },
     {
-      path: '/hotel-details/:id/:checkInDate/:checkOutDate',
+      path: '/hotel-details',
       name: 'Hotel Details',
       component: HotelDetailsPage,
+    },
+    {
+      path: '/checkout',
+      name: 'Checkout',
+      component: CheckoutPage,
+    },
+    {
+      path: '/my-trips',
+      name: 'My Trips',
+      component: MyTripsPage,
     },
   ],
 });

@@ -2,10 +2,13 @@
 import halfStar from '@/assets/images/icon-half-star.svg';
 import star from '@/assets/images/icon-star.svg';
 import AppButton from '@/components/AppButton.vue';
+import { useTripStore } from '@/stores/tripStore.js';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const searchParams = new URLSearchParams(useRoute().query);
+
+const tripStore = useTripStore();
 
 const props = defineProps({
   hotel: {
@@ -39,9 +42,32 @@ const discountPercent = computed(() => {
 const rating = computed(() => {
   return reviewRating.value / 2;
 });
-const hotelId = computed(() => props.hotel.property.id);
+
 const arrivalDate = searchParams.get('checkInDate').slice(0, 10);
-const departureDate = searchParams.get('checkInDate').slice(0, 10);
+const departureDate = searchParams.get('checkOutDate').slice(0, 10);
+
+function dateDiffInDays() {
+  const arrivalParts = arrivalDate.split('-');
+  const departParts = departureDate.split('-');
+  const diffDays = Math.abs(departParts[2] - arrivalParts[2]);
+
+  return `${diffDays} night stay`;
+}
+
+const updateTripProperties = () => {
+  tripStore.updateTripProperties({
+    hotelName,
+    hotelId: props.hotel.property.id,
+    imgUrl,
+    arrivalDate,
+    departureDate,
+    hotelRating: rating.value,
+    totalReviews,
+    nightStay: dateDiffInDays(),
+    grossPrice,
+    strikethroughPrice,
+  });
+};
 </script>
 
 <template>
@@ -62,7 +88,7 @@ const departureDate = searchParams.get('checkInDate').slice(0, 10);
           </h2>
 
           <div
-            class="text-white text-[13px] font-medium tracking-[0.26px] px-2 py-1 bg-[#EB5757] rounded-md"
+            class="text-white text-[0.8125rem] font-medium tracking-[0.26px] px-2 py-1 bg-[#EB5757] rounded-md"
             v-if="benefitBadge"
           >
             {{ benefitBadge }}
@@ -70,7 +96,7 @@ const departureDate = searchParams.get('checkInDate').slice(0, 10);
         </div>
 
         <div
-          class="flex font-normal text-sm text-gray-2 tracking-[0.28px] mb-[17px]"
+          class="review-rating flex font-normal text-sm text-gray-2 tracking-[0.28px] mb-[17px]"
         >
           <ul class="flex">
             <li v-for="n in 5" :key="n">
@@ -98,14 +124,11 @@ const departureDate = searchParams.get('checkInDate').slice(0, 10);
           <router-link
             :to="{
               name: 'Hotel Details',
-              params: {
-                id: hotelId,
-                checkInDate: arrivalDate,
-                checkOutDate: departureDate,
-              },
             }"
           >
-            <AppButton paddingY="py-[10px]"> See availability</AppButton>
+            <AppButton paddingY="py-[10px]" @click="updateTripProperties">
+              See availability</AppButton
+            >
           </router-link>
           <div>
             <div class="flex gap-2 mb-[6px ]">

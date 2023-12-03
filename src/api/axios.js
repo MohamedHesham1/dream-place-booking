@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useUserStore } from '@/stores/userStore';
 
-const rapidApiKey = '5e4245803emsh0c54f0717f2b5b2p1c3cf4jsna8a6ce5da589';
+const rapidApiKey = '121759b898mshbfd8c9050e10b74p11885fjsn5d1dc5a88516';
 
 const instance = axios.create({
   baseURL: 'https://booking-com15.p.rapidapi.com/api/v1/',

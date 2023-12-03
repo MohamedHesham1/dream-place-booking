@@ -5,6 +5,7 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { useUserStore } from '@/stores/userStore';
 
 defineProps({
   position: {
@@ -14,6 +15,8 @@ defineProps({
 
 const router = useRouter();
 const route = useRoute();
+const userStore = useUserStore();
+
 const citiesDetails = ref([]);
 const formValues = ref({
   place: null,
@@ -65,10 +68,17 @@ const handleSubmit = () => {
     rooms,
     destId: getDestId(place),
   };
-  router.push({
-    name: 'Search Results',
-    query,
-  });
+  if (userStore.user) {
+    router.push({
+      name: 'Search Results',
+      query,
+    });
+  } else {
+    router.push({
+      name: 'Login',
+      query,
+    });
+  }
 };
 
 onMounted(async () => {
@@ -77,7 +87,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- unfinished -->
   <form
     @submit.prevent="handleSubmit"
     class="search-form flex gap-[15px] absolute z-10 rounded-lg pt-[10px] pb-[11px] pr-[13px] pl-[12px] bg-white max-w-[1030px]"
@@ -88,7 +97,7 @@ onMounted(async () => {
       v-model="formValues.place"
       name="place"
       aria-label="Where are you going?"
-      class="max-w-[206px]"
+      class="w-[200px]"
       required
     >
       <option
@@ -108,6 +117,7 @@ onMounted(async () => {
       :enable-time-picker="false"
       :min-date="today"
       required
+      class="custom-datepicker"
     >
       <template #input-icon>
         <img
@@ -123,6 +133,7 @@ onMounted(async () => {
       :enable-time-picker="false"
       :min-date="tomorrow"
       required
+      class="custom-datepicker2"
     >
       <template #input-icon>
         <img
@@ -133,22 +144,28 @@ onMounted(async () => {
     </VueDatePicker>
 
     <input
-      type="text"
+      type="number"
       name="guests"
       id="guests"
       v-model.trim="formValues.guests"
       aria-label="Guests"
       placeholder="Guests"
       required
+      min="1"
+      max="10"
+      class="w-[124px]"
     />
     <input
-      type="text"
+      type="number"
       name="rooms"
       id="rooms"
       v-model.trim="formValues.rooms"
       aria-label="Rooms"
       placeholder="Rooms"
       required
+      min="1"
+      max="7"
+      class="w-[124px]"
     />
     <AppButton>Search</AppButton>
   </form>
@@ -164,10 +181,17 @@ select {
   background-color: #f2f2f2;
   padding: 11px 12px 12px 12px;
   border-radius: 4px;
-  max-width: 148px;
 }
 .dp__theme_light {
   --dp-background-color: #f2f2f2;
   --dp-input-padding: 11px 12px;
+}
+
+.custom-datepicker {
+  max-width: 170px;
+}
+
+.custom-datepicker2 {
+  max-width: 170px;
 }
 </style>

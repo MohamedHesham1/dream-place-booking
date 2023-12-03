@@ -5,15 +5,13 @@ import BookingSearchForm from '@/components/BookingSearchForm.vue';
 import HotelCard from '@/components/HotelCard.vue';
 import PaginationItem from '@/components/PaginationItem.vue';
 import RadioButton from '@/components/RadioButton.vue';
+import RatingButton from '@/components/RatingButton.vue';
 import { computed, onMounted, ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
-import RatingButton from '../components/RatingButton.vue';
 
-// Get route and search parameters
 const route = useRoute();
 const searchParams = new URLSearchParams(route.query);
 
-// Define reactive variables
 const hotels = ref([]);
 const sortOptions = ref([]);
 const propertiesNumber = ref('');
@@ -51,18 +49,15 @@ const headingText = computed(
   () => `${place.value} : ${propertiesNumber.value} search results found`
 );
 
-// Watch for route changes and sort option changes
-// make the search form send the request to handleHotelData
+// refactor so that getSortby is called on change
 watchEffect(async () => {
   place.value = new URLSearchParams(route.query).get('place');
   await handleHotelData();
 });
 
-// Call functions on component mount
 onMounted(async () => {
   await handleHotelData();
-  const sortOptionsData = await getSortby(searchValues.value);
-  sortOptions.value = sortOptionsData;
+  sortOptions.value = await getSortby(searchValues.value);
 });
 </script>
 
