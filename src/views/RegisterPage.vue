@@ -95,6 +95,11 @@ const handleSubmit = async () => {
       />
       <p v-if="!passwordsMatch" class="text-red-500">Passwords do not match.</p>
       <AppButton>Submit</AppButton>
+
+      <p class="text-secondary mt-3 text-sm font-medium">
+        Already have an account?
+        <router-link class="text-primary" to="/login"> Sign in</router-link>
+      </p>
     </form>
   </div>
 </template>

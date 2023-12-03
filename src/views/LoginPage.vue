@@ -47,17 +47,30 @@ const handleSubmit = async () => {
         for="password"
         >Password:</label
       >
-      <input
-        class="px-3 pt-[11px] pb-3 bg-gray-6 mb-5 rounded"
-        id="password"
-        v-model="password"
-        type="password"
-        required
-        @input="validatePassword"
-      />
+      <div class="relative mb-5 px-3 pt-[11px] pb-3 bg-gray-6 rounded">
+        <input
+          class="w-full bg-gray-6"
+          id="password"
+          v-model="password"
+          type="password"
+          required
+          @input="validatePassword"
+        />
+        <img
+          src="@/assets/images/icon-eye.svg"
+          alt="Email Icon"
+          class="absolute right-3 top-1/2 transform -translate-y-1/2"
+        />
+      </div>
+
       <p v-if="errorMessage" class="text-red">{{ errorMessage }}</p>
       <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p>
       <AppButton>Submit</AppButton>
+
+      <p class="text-secondary mt-3 text-sm font-medium">
+        Don't have an account?
+        <router-link class="text-primary" to="/register"> Sign up</router-link>
+      </p>
     </form>
   </div>
 </template>
