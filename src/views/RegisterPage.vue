@@ -11,6 +11,7 @@ const passwordsMatch = ref(true);
 const userStore = useUserStore();
 const router = useRouter();
 const passwordError = ref('');
+const showPassword = ref(false);
 
 const validatePassword = () => {
   passwordError.value = '';
@@ -31,6 +32,7 @@ const validatePassword = () => {
     return;
   }
 };
+
 const handleSubmit = async () => {
   if (password.value !== confirmPassword.value) {
     passwordsMatch.value = false;
@@ -71,14 +73,22 @@ const handleSubmit = async () => {
         for="password"
         >Password:</label
       >
-      <input
-        class="px-3 pt-[11px] pb-3 bg-gray-6 mb-5 rounded"
-        id="password"
-        v-model="password"
-        type="password"
-        required
-        @input="validatePassword"
-      />
+      <div class="relative mb-5 px-3 pt-[11px] pb-3 bg-gray-6 rounded">
+        <input
+          class="w-full bg-gray-6"
+          id="password"
+          v-model="password"
+          :type="showPassword ? 'text' : 'password'"
+          required
+          @input="validatePassword"
+        />
+        <img
+          src="@/assets/images/icon-eye.svg"
+          alt="Email Icon"
+          @click="showPassword = !showPassword"
+          class="absolute right-3 top-1/2 transform -translate-y-1/2"
+        />
+      </div>
       <p v-if="passwordError" class="text-red">{{ passwordError }}</p>
 
       <label
@@ -86,13 +96,21 @@ const handleSubmit = async () => {
         for="confirm-password"
         >Confirm Password:</label
       >
-      <input
-        class="px-3 pt-[11px] pb-3 bg-gray-6 mb-5 rounded"
-        id="confirm-password"
-        v-model="confirmPassword"
-        type="password"
-        required
-      />
+      <div class="relative mb-5 px-3 pt-[11px] pb-3 bg-gray-6 rounded">
+        <input
+          class="w-full bg-gray-6"
+          id="confirm-password"
+          v-model="confirmPassword"
+          :type="showPassword ? 'text' : 'password'"
+          required
+        />
+        <img
+          src="@/assets/images/icon-eye.svg"
+          alt="Email Icon"
+          @click="showPassword = !showPassword"
+          class="absolute right-3 top-1/2 transform -translate-y-1/2"
+        />
+      </div>
       <p v-if="!passwordsMatch" class="text-red-500">Passwords do not match.</p>
       <AppButton>Submit</AppButton>
 

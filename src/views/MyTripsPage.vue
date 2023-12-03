@@ -86,7 +86,7 @@ const tripStore = useTripStore();
             }"
           >
             <AppButton paddingY="py-[10px]" @click="updateTripProperties">
-              See availability</AppButton
+              View trip details</AppButton
             >
           </router-link>
         </div>

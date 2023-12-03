@@ -83,7 +83,11 @@ onUnmounted(() => {
         </ul>
 
         <div v-if="userStore.user" class="flex items-center gap-4">
-          <img src="@/assets/images/icon-notification.svg" alt="" />
+          <img
+            class="white-icon"
+            src="@/assets/images/icon-notification.svg"
+            alt=""
+          />
           <div class="relative" ref="dropdownContainer">
             <button @click="toggleDropdown" class="focus:outline-none">
               <img src="@/assets/images/icon-avatar.svg" alt="Avatar" />

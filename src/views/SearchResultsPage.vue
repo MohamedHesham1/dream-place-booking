@@ -18,6 +18,8 @@ const propertiesNumber = ref('');
 const sortOption = ref('popularity');
 const place = ref(searchParams.get('place'));
 const currentPage = ref(1);
+const searchQuery = ref('');
+
 const searchValues = ref({
   dest_id: searchParams.get('destId'),
   search_type: 'CITY',
@@ -48,6 +50,17 @@ const paginationProps = computed(() => ({
 const headingText = computed(
   () => `${place.value} : ${propertiesNumber.value} search results found`
 );
+const filteredHotels = computed(() => {
+  if (searchQuery.value) {
+    return hotels.value.filter((hotel) =>
+      hotel.property.name
+        .toLowerCase()
+        .includes(searchQuery.value.toLowerCase())
+    );
+  } else {
+    return hotels.value;
+  }
+});
 
 // refactor so that getSortby is called on change
 watchEffect(async () => {
@@ -77,6 +90,7 @@ onMounted(async () => {
           <div class="relative">
             <input
               type="search"
+              v-model="searchQuery"
               placeholder="eg. Beach westpalm"
               class="pl-10 pr-4 py-3 border rounded w-64 focus:outline-none focus:ring focus:border-blue-300"
             />
@@ -191,7 +205,7 @@ onMounted(async () => {
         </div>
 
         <ul class="flex flex-col gap-6">
-          <li v-for="hotel in hotels" :key="hotel.property.id">
+          <li v-for="hotel in filteredHotels" :key="hotel.property.id">
             <HotelCard :hotel="hotel" />
           </li>
         </ul>
